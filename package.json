@@ -1,6 +1,6 @@
 {
   "name": "flatted",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A fast and minimal circular JSON parser.",
   "browser": "min.js",
   "main": "cjs/index.js",
