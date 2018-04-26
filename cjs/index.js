@@ -5,8 +5,10 @@ var Flatted = (function (String) {
   var Flatted = {
 
     parse: function parse(text) {
-      var input = JSON.parse(text, Strings);
-      return revive(input.map(strings), new Set, input[0]);
+      var input = JSON.parse(text, Strings).map(strings);
+      var value = input[0];
+      return typeof value === 'object' && value ?
+              revive(input, new Set, value) : value;
     },
 
     stringify: function stringify(value) {

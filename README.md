@@ -48,7 +48,7 @@ Flatted.stringify(a);
 
 
 ### Why not CircularJSON ?
-If approved b y the community, this project will be the core of [CircularJSON](https://github.com/WebReflection/circular-json/#circularjson) V2.
+If approved by the community, this project will be the core of [CircularJSON](https://github.com/WebReflection/circular-json/#circularjson) V2.
 
 The main reasons for having this software a part are:
 

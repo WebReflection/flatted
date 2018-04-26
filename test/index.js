@@ -12,6 +12,9 @@ o.o = o;
 console.assert(Flatted.stringify(a) === '[["0"]]', 'recursive Array');
 console.assert(Flatted.stringify(o) === '[{"o":"0"}]', 'recursive Object');
 
+var b = Flatted.parse(Flatted.stringify(a));
+console.assert(Array.isArray(b) && b[0] === b, 'restoring recursive Array');
+
 a.push(1, 'two', true);
 o.one = 1;
 o.two = 'two';
@@ -63,3 +66,11 @@ console.assert(
 );
 
 console.assert(o.a === o.a[0] && o === o.a[4], 'object recursive values are OK');
+
+console.assert(Flatted.parse(Flatted.stringify(1)) === 1, 'numbers can be parsed too');
+console.assert(Flatted.parse(Flatted.stringify(false)) === false, 'booleans can be parsed too');
+console.assert(Flatted.parse(Flatted.stringify(null)) === null, 'null can be parsed too');
+console.assert(Flatted.parse(Flatted.stringify('test')) === 'test', 'strings can be parsed too');
+
+var d = new Date;
+console.assert(Flatted.parse(Flatted.stringify(d)) === d.toISOString(), 'dates can be parsed too');
