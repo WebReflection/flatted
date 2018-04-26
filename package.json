@@ -10,7 +10,7 @@
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "cjs": "cp index.js cjs/index.js; echo 'module.exports = Flatted;' >> cjs/index.js",
     "esm": "cp index.js esm/index.js; echo 'export default Flatted;' >> esm/index.js; echo 'export const parse = Flatted.parse;' >> esm/index.js; echo 'export const stringify = Flatted.stringify;' >> esm/index.js",
-    "min": "uglifyjs index.js --support-ie8 --comments=/^!/ -c -m -o min.js",
+    "min": "echo '/*! (c) 2018, Andrea Giammarchi, (ISC) */'>min.js && uglifyjs index.js --support-ie8 -c -m >> min.js",
     "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c9 min.js | wc -c",
     "test": "istanbul cover test/index.js"
   },

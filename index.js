@@ -1,6 +1,22 @@
 var Flatted = (function (String) {
 
-  /*! (c) 2018 Andrea Giammarchi - (ISC) */
+  /*!
+   * ISC License
+   *
+   * Copyright (c) 2018, Andrea Giammarchi, @WebReflection
+   *
+   * Permission to use, copy, modify, and/or distribute this software for any
+   * purpose with or without fee is hereby granted, provided that the above
+   * copyright notice and this permission notice appear in all copies.
+   *
+   * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+   * REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+   * AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+   * INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+   * LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
+   * OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+   * PERFORMANCE OF THIS SOFTWARE.
+   */
 
   var Flatted = {
 
@@ -16,7 +32,7 @@ var Flatted = (function (String) {
         firstRun,
         i = 0,
         known = new Map,
-        output = (known.set(value, '' + i), []),
+        output = (known.set(value, String(i)), []),
         input = [value],
         replace = function (key, value) {
           if (firstRun) return (firstRun = !firstRun), value;
@@ -60,13 +76,13 @@ var Flatted = (function (String) {
   }
 
   function set(known, input, value) {
-    var index = '' + (input.push(value) - 1);
+    var index = String(input.push(value) - 1);
     known.set(value, index);
     return index;
   }
 
   function strings(value) {
-    return value instanceof String ? ('' + value) : value;
+    return value instanceof String ? String(value) : value;
   }
 
   function Strings(key, value) {
