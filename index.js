@@ -1,4 +1,4 @@
-var Flatted = (function (String) {
+var Flatted = (function (Primitive, primitive) {
 
   /*!
    * ISC License
@@ -21,7 +21,7 @@ var Flatted = (function (String) {
   var Flatted = {
 
     parse: function parse(text) {
-      var input = JSON.parse(text, Strings).map(strings);
+      var input = JSON.parse(text, Primitives).map(primitives);
       var value = input[0];
       return typeof value === 'object' && value ?
               revive(input, new Set, value) : value;
@@ -32,14 +32,14 @@ var Flatted = (function (String) {
         firstRun,
         i = 0,
         known = new Map,
-        output = (known.set(value, String(i)), []),
+        output = (known.set(value, Primitive(i)), []),
         input = [value],
         replace = function (key, value) {
           if (firstRun) return (firstRun = !firstRun), value;
           switch (typeof value) {
-            case "object":
+            case 'object':
               if (value === null) return value;
-            case "string":
+            case primitive:
               return known.get(value) || set(known, input, value);
           }
           return value;
@@ -60,7 +60,7 @@ var Flatted = (function (String) {
     return Object.keys(output).reduce(
       function (output, key) {
         var value = output[key];
-        if (value instanceof String) {
+        if (value instanceof Primitive) {
           var tmp = input[value];
           if (typeof tmp === 'object' && !parsed.has(tmp)) {
             parsed.add(tmp);
@@ -76,17 +76,17 @@ var Flatted = (function (String) {
   }
 
   function set(known, input, value) {
-    var index = String(input.push(value) - 1);
+    var index = Primitive(input.push(value) - 1);
     known.set(value, index);
     return index;
   }
 
-  function strings(value) {
-    return value instanceof String ? String(value) : value;
+  function primitives(value) {
+    return value instanceof Primitive ? Primitive(value) : value;
   }
 
-  function Strings(key, value) {
-    return typeof value === 'string' ? new String(value) : value;
+  function Primitives(key, value) {
+    return typeof value === primitive ? new Primitive(value) : value;
   }
 
-}(String));
+}(String, 'string'));

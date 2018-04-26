@@ -6,8 +6,8 @@ FN:30,stringify
 FN:59,revive
 FN:61,(anonymous_5)
 FN:78,set
-FN:84,strings
-FN:88,Strings
+FN:84,primitives
+FN:88,Primitives
 FNF:8
 FNH:8
 FNDA:1,(anonymous_1)
@@ -16,8 +16,8 @@ FNDA:18,stringify
 FNDA:16,revive
 FNDA:60,(anonymous_5)
 FNDA:34,set
-FNDA:22,strings
-FNDA:75,Strings
+FNDA:22,primitives
+FNDA:75,Primitives
 DA:1,1
 DA:21,1
 DA:24,8

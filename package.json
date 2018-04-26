@@ -6,6 +6,7 @@
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "scripts": {
+    "bench": "node test/bench.js",
     "build": "npm run cjs && npm test && npm run esm && npm run min && npm run size",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "cjs": "cp index.js cjs/index.js; echo 'module.exports = Flatted;' >> cjs/index.js",
@@ -32,6 +33,9 @@
   },
   "homepage": "https://github.com/WebReflection/flatted#readme",
   "devDependencies": {
+    "circular-json": "latest",
+    "circular-json-es6": "latest",
+    "jsan": "latest",
     "uglify-js": "^3.3.22"
   },
   "dependencies": {
