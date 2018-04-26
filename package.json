@@ -1,0 +1,41 @@
+{
+  "name": "flatted",
+  "version": "0.0.0",
+  "description": "A fast and minimal circular JSON parser.",
+  "browser": "min.js",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "scripts": {
+    "build": "npm run cjs && npm test && npm run esm && npm run min && npm run size",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "cjs": "cp index.js cjs/index.js; echo 'module.exports = Flatted;' >> cjs/index.js",
+    "esm": "cp index.js esm/index.js; echo 'export default Flatted;' >> esm/index.js; echo 'export const parse = Flatted.parse;' >> esm/index.js; echo 'export const stringify = Flatted.stringify;' >> esm/index.js",
+    "min": "uglifyjs index.js --support-ie8 --comments=/^!/ -c -m -o min.js",
+    "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c9 min.js | wc -c",
+    "test": "istanbul cover test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebReflection/flatted.git"
+  },
+  "keywords": [
+    "circular",
+    "JSON",
+    "fast",
+    "parser",
+    "minimal"
+  ],
+  "author": "Andrea Giammarchi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WebReflection/flatted/issues"
+  },
+  "homepage": "https://github.com/WebReflection/flatted#readme",
+  "devDependencies": {
+    "uglify-js": "^3.3.22"
+  },
+  "dependencies": {
+    "coveralls": "^3.0.0",
+    "istanbul": "^0.4.5"
+  }
+}
