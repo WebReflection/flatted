@@ -30,10 +30,10 @@ var Flatted = (function (Primitive, primitive) {
     stringify: function stringify(value) {
       for (var
         firstRun,
-        i = 0,
         known = new Map,
-        output = (known.set(value, Primitive(i)), []),
-        input = [value],
+        input = [],
+        output = [],
+        i = +set(known, input, value),
         replace = function (key, value) {
           if (firstRun) return (firstRun = !firstRun), value;
           switch (typeof value) {
