@@ -35,11 +35,9 @@
   "devDependencies": {
     "circular-json": "latest",
     "circular-json-es6": "latest",
+    "coveralls": "^3.0.0",
+    "istanbul": "^0.4.5",
     "jsan": "latest",
     "uglify-js": "^3.3.22"
-  },
-  "dependencies": {
-    "coveralls": "^3.0.0",
-    "istanbul": "^0.4.5"
   }
 }
