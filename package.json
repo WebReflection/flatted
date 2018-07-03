@@ -2,7 +2,7 @@
   "name": "flatted",
   "version": "0.2.2",
   "description": "A fast and minimal circular JSON parser.",
-  "browser": "min.js",
+  "unpkg": "min.js",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "scripts": {
