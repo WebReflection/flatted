@@ -20,6 +20,10 @@ a.push(a);
 stringify(a); // [["1","0"],{"a":"0"}]
 ```
 
+### New in V1
+
+Added a [reviver](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Syntax) parameter to `.parse(string)` and revive your own objects.
+
 
 ### Compatibility
 All ECMAScript engines compatible with `Map`, `Set`, `Object.keys`, and `Array.prototype.reduce` will work, even if polyfilled.
@@ -53,7 +57,7 @@ If approved by the community, this project will be the core of [CircularJSON](ht
 The main reasons for having this software a part are:
 
   * battle-testing against all complex cases before releasing CircularJSON V2
-  * provide a minimal parser without extra complexity needed by revivers and replacers
+  * provide a minimal parser without extra complexity needed by ~~revivers and~~ replacers
   * give developers a way to compare the two formats (on average, with big structures, smaller with flatted)
 
 Once satisfied by feedbacks and results, there will be a version of this project fully compatible with JSON API.
