@@ -74,3 +74,27 @@ console.assert(Flatted.parse(Flatted.stringify('test')) === 'test', 'strings can
 
 var d = new Date;
 console.assert(Flatted.parse(Flatted.stringify(d)) === d.toISOString(), 'dates can be parsed too');
+
+console.assert(Flatted.parse(
+  Flatted.stringify(d),
+  function (key, value) {
+    if (typeof value === 'string' && /^[0-9:.ZT-]+$/.test(value))
+      return new Date(value);
+    return value;
+  }
+) instanceof Date, 'dates can be revived too');
+
+console.assert(Flatted.parse(
+  Flatted.stringify({
+    sub: {
+      one23: 123,
+      date: d
+    }
+  }),
+  function (key, value) {
+    if (key !== '' && typeof value === 'string' && /^[0-9:.ZT-]+$/.test(value))
+      return new Date(value);
+    return value;
+  }
+).sub.date instanceof Date, 'dates can be revived too');
+

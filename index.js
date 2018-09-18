@@ -20,11 +20,16 @@ var Flatted = (function (Primitive, primitive) {
 
   var Flatted = {
 
-    parse: function parse(text) {
+    parse: function parse(text, reviver) {
       var input = JSON.parse(text, Primitives).map(primitives);
       var value = input[0];
-      return typeof value === 'object' && value ?
-              revive(input, new Set, value) : value;
+      var $ = reviver || function (k, v) { return v; };
+      return $(
+        '',
+        typeof value === 'object' && value ?
+          revive(input, new Set, value, $) :
+          value
+      );
     },
 
     stringify: function stringify(value) {
@@ -56,7 +61,7 @@ var Flatted = (function (Primitive, primitive) {
 
   return Flatted;
 
-  function revive(input, parsed, output) {
+  function revive(input, parsed, output, $) {
     return Object.keys(output).reduce(
       function (output, key) {
         var value = output[key];
@@ -64,11 +69,12 @@ var Flatted = (function (Primitive, primitive) {
           var tmp = input[value];
           if (typeof tmp === 'object' && !parsed.has(tmp)) {
             parsed.add(tmp);
-            output[key] = revive(input, parsed, tmp);
+            output[key] = $(key, revive(input, parsed, tmp, $));
           } else {
-            output[key] = tmp;
+            output[key] = $(key, tmp);
           }
-        }
+        } else
+          output[key] = $(key, value);
         return output;
       },
       output
@@ -80,6 +86,10 @@ var Flatted = (function (Primitive, primitive) {
     known.set(value, index);
     return index;
   }
+
+  // the two kinds of primitives
+  //  1. the real one
+  //  2. the wrapped one
 
   function primitives(value) {
     return value instanceof Primitive ? Primitive(value) : value;
