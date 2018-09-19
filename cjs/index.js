@@ -38,11 +38,18 @@ var Flatted = (function (Primitive, primitive) {
         known = new Map,
         input = [],
         output = [],
-        $ = replacer || noop,
+        $ = replacer && typeof replacer === typeof input ?
+              function (k, v) {
+                if (k === '' || -1 < replacer.indexOf(k)) return v;
+              } :
+              (replacer || noop),
         i = +set(known, input, $('', value)),
         replace = function (key, value) {
-          if (firstRun) return (firstRun = !firstRun), value;
-          var after = $('', value);
+          if (firstRun) {
+            firstRun = !firstRun;
+            return i < 1 ? value : $(key, value);
+          }
+          var after = $(key, value);
           switch (typeof after) {
             case 'object':
               if (after === null) return after;
