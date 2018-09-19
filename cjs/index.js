@@ -23,7 +23,7 @@ var Flatted = (function (Primitive, primitive) {
     parse: function parse(text, reviver) {
       var input = JSON.parse(text, Primitives).map(primitives);
       var value = input[0];
-      var $ = reviver || function (k, v) { return v; };
+      var $ = reviver || noop;
       return $(
         '',
         typeof value === 'object' && value ?
@@ -32,27 +32,36 @@ var Flatted = (function (Primitive, primitive) {
       );
     },
 
-    stringify: function stringify(value) {
+    stringify: function stringify(value, replacer, space) {
       for (var
         firstRun,
         known = new Map,
         input = [],
         output = [],
-        i = +set(known, input, value),
+        $ = replacer && typeof replacer === typeof input ?
+              function (k, v) {
+                if (k === '' || -1 < replacer.indexOf(k)) return v;
+              } :
+              (replacer || noop),
+        i = +set(known, input, $('', value)),
         replace = function (key, value) {
-          if (firstRun) return (firstRun = !firstRun), value;
-          switch (typeof value) {
-            case 'object':
-              if (value === null) return value;
-            case primitive:
-              return known.get(value) || set(known, input, value);
+          if (firstRun) {
+            firstRun = !firstRun;
+            return i < 1 ? value : $(key, value);
           }
-          return value;
+          var after = $(key, value);
+          switch (typeof after) {
+            case 'object':
+              if (after === null) return after;
+            case primitive:
+              return known.get(after) || set(known, input, after);
+          }
+          return after;
         };
         i < input.length; i++
       ) {
         firstRun = true;
-        output[i] = JSON.stringify(input[i], replace);
+        output[i] = JSON.stringify(input[i], replace, space);
       }
       return '[' + output.join(',') + ']';
     }
@@ -60,6 +69,10 @@ var Flatted = (function (Primitive, primitive) {
   };
 
   return Flatted;
+
+  function noop(key, value) {
+    return value;
+  }
 
   function revive(input, parsed, output, $) {
     return Object.keys(output).reduce(

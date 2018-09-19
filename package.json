@@ -1,7 +1,7 @@
 {
   "name": "flatted",
   "version": "1.0.0",
-  "description": "A fast and minimal circular JSON parser.",
+  "description": "A super light and fast circular JSON parser.",
   "unpkg": "min.js",
   "main": "cjs/index.js",
   "module": "esm/index.js",
@@ -12,7 +12,7 @@
     "cjs": "cp index.js cjs/index.js; echo 'module.exports = Flatted;' >> cjs/index.js",
     "esm": "cp index.js esm/index.js; echo 'export default Flatted;' >> esm/index.js; echo 'export const parse = Flatted.parse;' >> esm/index.js; echo 'export const stringify = Flatted.stringify;' >> esm/index.js",
     "min": "echo '/*! (c) 2018, Andrea Giammarchi, (ISC) */'>min.js && uglifyjs index.js --support-ie8 -c -m >> min.js",
-    "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c9 min.js | wc -c",
+    "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c9 min.js | wc -c;cat min.js | brotli | wc -c",
     "test": "istanbul cover test/index.js"
   },
   "repository": {

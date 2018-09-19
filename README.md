@@ -2,7 +2,7 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/WebReflection/flatted/badge.svg?branch=master)](https://coveralls.io/github/WebReflection/flatted?branch=master) [![Build Status](https://travis-ci.org/WebReflection/flatted.svg?branch=master)](https://travis-ci.org/WebReflection/flatted) [![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](https://opensource.org/licenses/ISC)
 
-A fast and minimal circular JSON parser.
+A super light (0.5K) and fast circular JSON parser, directly from the creator of [CircularJSON](https://github.com/WebReflection/circular-json/#circularjson).
 
 Usable via [CDN](https://unpkg.com/flatted) or as regular module.
 
@@ -20,9 +20,10 @@ a.push(a);
 stringify(a); // [["1","0"],{"a":"0"}]
 ```
 
-### New in V1
+### New in V1: Exact same JSON API
 
-Added a [reviver](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Syntax) parameter to `.parse(string)` and revive your own objects.
+  *Added a [reviver](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Syntax) parameter to `.parse(string, fn)` and revive your own objects.
+  * Added a [replacer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#Syntax) and a `space` parameter to `.stringify(object, replacer, space)` for feature parity with JSON signature.
 
 
 ### Compatibility
@@ -49,15 +50,3 @@ Flatted.stringify(a);
 // [["1","2"],{"one":1,"a":"0"},{"two":"3"},"2"]
 // a[one,two]    {one: 1, a}    {two: '2'}  '2'
 ```
-
-
-### Why not CircularJSON ?
-If approved by the community, this project will be the core of [CircularJSON](https://github.com/WebReflection/circular-json/#circularjson) V2.
-
-The main reasons for having this software a part are:
-
-  * battle-testing against all complex cases before releasing CircularJSON V2
-  * provide a minimal parser without extra complexity needed by ~~revivers and~~ replacers
-  * give developers a way to compare the two formats (on average, with big structures, smaller with flatted)
-
-Once satisfied by feedbacks and results, there will be a version of this project fully compatible with JSON API.
