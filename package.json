@@ -5,6 +5,7 @@
   "unpkg": "min.js",
   "main": "cjs/index.js",
   "module": "esm/index.js",
+  "types": "types.d.ts",
   "scripts": {
     "bench": "node test/bench.js",
     "build": "npm run cjs && npm test && npm run esm && npm run min && npm run size",
