@@ -1,6 +1,6 @@
 # flatted
 
-[![Coverage Status](https://coveralls.io/repos/github/WebReflection/flatted/badge.svg?branch=master)](https://coveralls.io/github/WebReflection/flatted?branch=master) [![Build Status](https://travis-ci.org/WebReflection/flatted.svg?branch=master)](https://travis-ci.org/WebReflection/flatted) [![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](https://opensource.org/licenses/ISC)
+[![Coverage Status](https://coveralls.io/repos/github/WebReflection/flatted/badge.svg?branch=master)](https://coveralls.io/github/WebReflection/flatted?branch=master) [![Build Status](https://travis-ci.org/WebReflection/flatted.svg?branch=master)](https://travis-ci.org/WebReflection/flatted) ![Downloads](https://img.shields.io/npm/dm/flatted.svg) [![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](https://opensource.org/licenses/ISC)
 
 A super light (0.5K) and fast circular JSON parser, directly from the creator of [CircularJSON](https://github.com/WebReflection/circular-json/#circularjson).
 
