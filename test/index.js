@@ -99,6 +99,22 @@ console.assert(Flatted.parse(
 ).sub.date instanceof Date, 'dates can be revived too');
 
 
+const reviver = function (key, value) {
+  console.assert(this !== global, 'this should not be global')
+  return value;
+};
+
+const replacer = function (key, value) {
+  console.assert(this !== global, 'this should not be global')
+  return value;
+};
+
+console.assert(Flatted.parse(
+  Flatted.stringify(d, replacer),
+  reviver
+), 'reviver should be called with correct this');
+
+
 // borrowed from CircularJSON
 
 

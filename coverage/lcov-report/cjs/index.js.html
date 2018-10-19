@@ -221,8 +221,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">130×</span>
-<span class="cline-any cline-yes">130×</span>
+<span class="cline-any cline-yes">128×</span>
+<span class="cline-any cline-yes">128×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">38×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -232,45 +232,45 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">527×</span>
+<span class="cline-any cline-yes">521×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">70×</span>
+<span class="cline-any cline-yes">68×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">170×</span>
-<span class="cline-any cline-yes">170×</span>
-<span class="cline-any cline-yes">114×</span>
-<span class="cline-any cline-yes">114×</span>
-<span class="cline-any cline-yes">52×</span>
-<span class="cline-any cline-yes">52×</span>
+<span class="cline-any cline-yes">167×</span>
+<span class="cline-any cline-yes">167×</span>
+<span class="cline-any cline-yes">112×</span>
+<span class="cline-any cline-yes">112×</span>
+<span class="cline-any cline-yes">51×</span>
+<span class="cline-any cline-yes">51×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">62×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">56×</span>
-<span class="cline-any cline-yes">170×</span>
+<span class="cline-any cline-yes">61×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">130×</span>
-<span class="cline-any cline-yes">130×</span>
-<span class="cline-any cline-yes">130×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">55×</span>
+<span class="cline-any cline-yes">167×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">94×</span>
+<span class="cline-any cline-yes">128×</span>
+<span class="cline-any cline-yes">128×</span>
+<span class="cline-any cline-yes">128×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">257×</span>
+<span class="cline-any cline-yes">92×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">252×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -301,10 +301,10 @@
       var input = JSON.parse(text, Primitives).map(primitives);
       var value = input[0];
       var $ = reviver || noop;
-      return $(
+      return $.call(this, 
         '',
         typeof value === 'object' &amp;&amp; value ?
-          revive(input, new Set, value, $) :
+          revive.call(this, input, new Set, value, $) :
           value
       );
     },
@@ -320,13 +320,13 @@
                 if (k === '' || -1 &lt; replacer.indexOf(k)) return v;
               } :
               (replacer || noop),
-        i = +set(known, input, $('', value)),
+        i = +set(known, input, $.call(this, '', value)),
         replace = function (key, value) {
           if (firstRun) {
             firstRun = !firstRun;
-            return i &lt; 1 ? value : $(key, value);
+            return i &lt; 1 ? value : $.call(this, key, value);
           }
-          var after = $(key, value);
+          var after = $.call(this, key, value);
           switch (typeof after) {
             case 'object':
               if (after === null) return after;
@@ -359,12 +359,12 @@
           var tmp = input[value];
           if (typeof tmp === 'object' &amp;&amp; !parsed.has(tmp)) {
             parsed.add(tmp);
-            output[key] = $(key, revive(input, parsed, tmp, $));
+            output[key] = $.call(this, key, revive(input, parsed, tmp, $));
           } else {
-            output[key] = $(key, tmp);
+            output[key] = $.call(this, key, tmp);
           }
         } else
-          output[key] = $(key, value);
+          output[key] = $.call(this, key, value);
         return output;
       },
       output
@@ -397,7 +397,7 @@ module.exports = Flatted;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Sep 19 2018 09:00:14 GMT+0200 (CEST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Oct 19 2018 22:12:18 GMT+0200 (CEST)
 </div>
 </div>
 <script src="../prettify.js"></script>
