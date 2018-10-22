@@ -24,12 +24,10 @@ var Flatted = (function (Primitive, primitive) {
       var input = JSON.parse(text, Primitives).map(primitives);
       var value = input[0];
       var $ = reviver || noop;
-      return $(
-        '',
-        typeof value === 'object' && value ?
-          revive(input, new Set, value, $) :
-          value
-      );
+      var tmp = typeof value === 'object' && value ?
+                  revive(input, new Set, value, $) :
+                  value;
+      return $.call({'': tmp}, '', tmp);
     },
 
     stringify: function stringify(value, replacer, space) {
@@ -43,13 +41,15 @@ var Flatted = (function (Primitive, primitive) {
                 if (k === '' || -1 < replacer.indexOf(k)) return v;
               } :
               (replacer || noop),
-        i = +set(known, input, $('', value)),
+        i = +set(known, input, $.call({'': value}, '', value)),
         replace = function (key, value) {
           if (firstRun) {
             firstRun = !firstRun;
-            return i < 1 ? value : $(key, value);
+            return value;
+            // this was invoking twice each root object
+            // return i < 1 ? value : $.call(this, key, value);
           }
-          var after = $(key, value);
+          var after = $.call(this, key, value);
           switch (typeof after) {
             case 'object':
               if (after === null) return after;
@@ -82,12 +82,12 @@ var Flatted = (function (Primitive, primitive) {
           var tmp = input[value];
           if (typeof tmp === 'object' && !parsed.has(tmp)) {
             parsed.add(tmp);
-            output[key] = $(key, revive(input, parsed, tmp, $));
+            output[key] = $.call(output, key, revive(input, parsed, tmp, $));
           } else {
-            output[key] = $(key, tmp);
+            output[key] = $.call(output, key, tmp);
           }
         } else
-          output[key] = $(key, value);
+          output[key] = $.call(output, key, value);
         return output;
       },
       output
