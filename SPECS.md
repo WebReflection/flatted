@@ -6,7 +6,7 @@ This document describes operations performed to produce, or parse, the flatted o
 
 The output is always an `Array` that contains at index `0` the given value.
 
-If the value is an `Array` or an `Object`, per each property value passed through the callback, return the value as is if it's not an `Array`, an `Obejct`, or a `string`.
+If the value is an `Array` or an `Object`, per each property value passed through the callback, return the value as is if it's not an `Array`, an `Object`, or a `string`.
 
 In case it's an `Array`, an `Object`, or a `string`, return the index as `string`, associated through a `Map`.
 
@@ -64,9 +64,9 @@ function strings(value) {
 
 The `input` array will have a regular `string` at index `1`, but its object at index `0` will have an `instanceof String` as `.a` property.
 
-That is the key to place back values from the rest of the array, so that per each property of the object at index `0`, if the the value is an `instanceof` String, something not serializable via JSON, it means it can be used to retrieve the position of its value from the `input` array.
+That is the key to place back values from the rest of the array, so that per each property of the object at index `0`, if the value is an `instanceof` String, something not serializable via JSON, it means it can be used to retrieve the position of its value from the `input` array.
 
-If such `value` is an object and it hasn'e been parsed yet, add it as parsed and go through all its properties/values.
+If such `value` is an object and it hasn't been parsed yet, add it as parsed and go through all its properties/values.
 
 ```js
 // outside any loop ...
