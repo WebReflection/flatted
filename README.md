@@ -4,6 +4,10 @@
 
 A super light (0.5K) and fast circular JSON parser, directly from the creator of [CircularJSON](https://github.com/WebReflection/circular-json/#circularjson).
 
+```js
+npm -i flatted
+```
+
 Usable via [CDN](https://unpkg.com/flatted) or as regular module.
 
 ```js
