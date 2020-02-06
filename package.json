@@ -34,11 +34,11 @@
   },
   "homepage": "https://github.com/WebReflection/flatted#readme",
   "devDependencies": {
-    "circular-json": "latest",
-    "circular-json-es6": "latest",
-    "coveralls": "latest",
-    "istanbul": "latest",
-    "jsan": "latest",
-    "uglify-js": "latest"
+    "circular-json": "^0.5.9",
+    "circular-json-es6": "^2.0.2",
+    "coveralls": "^3.0.9",
+    "istanbul": "^0.4.5",
+    "jsan": "^3.1.13",
+    "uglify-js": "^3.7.7"
   }
 }
