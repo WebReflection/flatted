@@ -39,6 +39,6 @@
     "coveralls": "^3.0.9",
     "istanbul": "^0.4.5",
     "jsan": "^3.1.13",
-    "uglify-js": "^3.7.7"
+    "uglify-js": "^3.8.0"
   }
 }
