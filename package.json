@@ -9,12 +9,12 @@
   "scripts": {
     "bench": "node test/bench.js",
     "build": "npm run cjs && npm test && npm run esm && npm run min && npm run size",
-    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "cjs": "cp index.js cjs/index.js; echo 'module.exports = Flatted;' >> cjs/index.js",
     "esm": "cp index.js esm/index.js; echo 'export default Flatted;' >> esm/index.js; echo 'export var parse = Flatted.parse;' >> esm/index.js; echo 'export var stringify = Flatted.stringify;' >> esm/index.js",
     "min": "echo '/*! (c) 2018, Andrea Giammarchi, (ISC) */'>min.js && uglifyjs index.js --support-ie8 -c -m >> min.js",
     "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c9 min.js | wc -c;cat min.js | brotli | wc -c",
-    "test": "istanbul cover test/index.js"
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "test": "nyc node test/index.js"
   },
   "repository": {
     "type": "git",
@@ -36,9 +36,9 @@
   "devDependencies": {
     "circular-json": "^0.5.9",
     "circular-json-es6": "^2.0.2",
-    "coveralls": "^3.0.9",
-    "istanbul": "^0.4.5",
+    "coveralls": "^3.0.11",
     "jsan": "^3.1.13",
-    "uglify-js": "^3.8.0"
+    "nyc": "^15.0.0",
+    "uglify-js": "^3.8.1"
   }
 }

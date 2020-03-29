@@ -1,5 +1,7 @@
 var Flatted = require('../cjs');
 
+console.assert(Flatted.stringify([null, null]) === '[[null,null]]', 'multiple null');
+
 var a = [];
 var o = {};
 

@@ -1,9 +1,11 @@
-coverage/*
-esm/.eslintrc
-node_modules/*
-test/*
+.nyc_output/
 _config.yml
 .DS_Store
-.gitignore
-.travis.yml
+esm/.eslintrc
+node_modules/
+rollup/
+test/
 package-lock.json
+uhtml-head.jpg
+LOGO.txt
+.travis.yml
