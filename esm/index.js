@@ -111,6 +111,5 @@ var Flatted = (function (Primitive, primitive) {
   }
 
 }(String, 'string'));
-export default Flatted;
 export var parse = Flatted.parse;
 export var stringify = Flatted.stringify;
