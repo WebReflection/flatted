@@ -1,11 +1,7 @@
-.nyc_output/
-_config.yml
 .DS_Store
-esm/.eslintrc
+.nyc_output
+.travis.yml
 node_modules/
 rollup/
 test/
 package-lock.json
-uhtml-head.jpg
-LOGO.txt
-.travis.yml

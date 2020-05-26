@@ -4,13 +4,14 @@
   "description": "A super light and fast circular JSON parser.",
   "unpkg": "min.js",
   "types": "types.d.ts",
+  "main": "./cjs/index.js",
   "scripts": {
-    "bench": "node test/bench.js",
-    "build": "npm run cjs && npm test && npm run esm && npm run min && npm run size",
-    "cjs": "cp index.js cjs/index.js; echo 'module.exports = Flatted;' >> cjs/index.js",
-    "esm": "cp index.js esm/index.js; echo 'export var parse = Flatted.parse;' >> esm/index.js; echo 'export var stringify = Flatted.stringify;' >> esm/index.js",
-    "min": "echo '/*! (c) 2018, Andrea Giammarchi, (ISC) */'>min.js && uglifyjs index.js --support-ie8 -c -m >> min.js",
-    "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c9 min.js | wc -c;cat min.js | brotli | wc -c",
+    "build": "npm run cjs && npm run rollup:es && npm run rollup:babel && npm run min && npm run test && npm run size",
+    "cjs": "ascjs esm cjs",
+    "rollup:es": "rollup --config rollup/es.config.js && sed -i.bck 's/^var /self./' es.js && rm -rf es.js.bck",
+    "rollup:babel": "rollup --config rollup/babel.config.js && sed -i.bck 's/^var /self./' index.js && rm -rf index.js.bck && drop-babel-typeof index.js",
+    "min": "uglifyjs index.js --support-ie8 --comments=/^!/ -c -m -o min.js",
+    "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c9 min.js | wc -c;cat min.js | brotli | wc -c; cat es.js | brotli | wc -c",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "test": "nyc node test/index.js"
   },
@@ -25,13 +26,6 @@
     "parser",
     "minimal"
   ],
-  "type": "module",
-  "main": "./cjs/index.js",
-  "module": "./esm/index.js",
-  "exports": {
-    "import": "./esm/index.js",
-    "default": "./cjs/index.js"
-  },
   "author": "Andrea Giammarchi",
   "license": "ISC",
   "bugs": {
@@ -39,11 +33,25 @@
   },
   "homepage": "https://github.com/WebReflection/flatted#readme",
   "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "ascjs": "^4.0.1",
     "circular-json": "^0.5.9",
     "circular-json-es6": "^2.0.2",
     "coveralls": "^3.1.0",
+    "drop-babel-typeof": "^1.0.3",
     "jsan": "^3.1.13",
     "nyc": "^15.0.1",
+    "rollup": "^2.10.9",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^6.1.0",
     "uglify-js": "^3.9.3"
+  },
+  "module": "./esm/index.js",
+  "type": "module",
+  "exports": {
+    "import": "./esm/index.js",
+    "default": "./cjs/index.js"
   }
 }
