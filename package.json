@@ -3,8 +3,6 @@
   "version": "2.0.2",
   "description": "A super light and fast circular JSON parser.",
   "unpkg": "min.js",
-  "main": "cjs/index.js",
-  "module": "esm/index.js",
   "types": "types.d.ts",
   "scripts": {
     "bench": "node test/bench.js",
@@ -27,6 +25,13 @@
     "parser",
     "minimal"
   ],
+  "type": "module",
+  "main": "./cjs/index.js",
+  "module": "./esm/index.js",
+  "exports": {
+    "import": "./esm/index.js",
+    "default": "./cjs/index.js"
+  },
   "author": "Andrea Giammarchi",
   "license": "ISC",
   "bugs": {

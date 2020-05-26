@@ -12,10 +12,10 @@ Usable via [CDN](https://unpkg.com/flatted) or as regular module.
 
 ```js
 // ESM
-import {parse, stringify} from 'flatted/esm';
+import {parse, stringify} from 'flatted';
 
 // CJS
-const {parse, stringify} = require('flatted/cjs');
+const {parse, stringify} = require('flatted');
 
 const a = [{}];
 a[0].a = a;
