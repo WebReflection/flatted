@@ -333,10 +333,10 @@ console.assert(Flatted.parse(
   console.assert(
   oo.a.aa.aaa = 'value1'
     && oo === oo.b
-    && o.c.ca.caa === o.c.ca
-    && o.c.cb.cba === o.c.cb
-    && o.c.cc.cca === o.c
-    && o.c.cd.cda === o.c.ca.caa
+    && oo.c.ca.caa === oo.c.ca
+    && oo.c.cb.cba === oo.c.cb
+    && oo.c.cc.cca === oo.c
+    && oo.c.cd.cda === oo.c.ca.caa
     && oo.c.ce === 'value2'
     && oo.c.cf === 'value3',
     'parse is correct'
