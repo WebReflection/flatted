@@ -126,15 +126,11 @@ class Flatted {
       $set[] = $value;
       $value = Flatted::loop(true, Flatted::keys($value), $input, $set, $value);
     }
-    Flatted::set($obj, $output, $key, $value);
-  }
-
-  private static function set(&$obj, &$ref, &$key, &$value) {
     if ($obj) {
-      $ref->$key = &$value;
+      $output->$key = &$value;
     }
     else {
-      $ref[$key] = &$value;
+      $output[$key] = &$value;
     }
   }
 
