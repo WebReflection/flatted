@@ -7,6 +7,7 @@ const {keys} = Object;
 const Primitive = String;   // it could be Number
 const primitive = 'string'; // it could be 'number'
 
+const ignore = {};
 const object = 'object';
 
 const noop = (_, value) => value;
@@ -20,19 +21,26 @@ const Primitives = (_, value) => (
 );
 
 const revive = (input, parsed, output, $) => {
+  const lazy = [];
   for (let ke = keys(output), {length} = ke, y = 0; y < length; y++) {
-    const key = ke[y];
-    const value = output[key];
+    const k = ke[y];
+    const value = output[k];
     if (value instanceof Primitive) {
       const tmp = input[value];
       if (typeof tmp === object && !parsed.has(tmp)) {
         parsed.add(tmp);
-        output[key] = $.call(output, key, revive(input, parsed, tmp, $));
-      } else {
-        output[key] = $.call(output, key, tmp);
+        output[k] = ignore;
+        lazy.push({k, a: [input, parsed, tmp, $]});
       }
-    } else
-      output[key] = $.call(output, key, value);
+      else
+        output[k] = $.call(output, k, tmp);
+    }
+    else if (output[k] !== ignore)
+      output[k] = $.call(output, k, value);
+  }
+  for (let {length} = lazy, i = 0; i < length; i++) {
+    const {k, a} = lazy[i];
+    output[k] = $.call(output, k, revive.apply(null, a));
   }
   return output;
 };
