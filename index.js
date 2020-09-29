@@ -26,7 +26,8 @@ self.Flatted = (function (exports) {
   };
 
   var revive = function revive(input, parsed, output, $) {
-    return keys(output).reduce(function (output, key) {
+    for (var ke = keys(output), length = ke.length, y = 0; y < length; y++) {
+      var key = ke[y];
       var value = output[key];
 
       if (value instanceof Primitive) {
@@ -39,9 +40,9 @@ self.Flatted = (function (exports) {
           output[key] = $.call(output, key, tmp);
         }
       } else output[key] = $.call(output, key, value);
+    }
 
-      return output;
-    }, output);
+    return output;
   };
 
   var set = function set(known, input, value) {

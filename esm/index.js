@@ -18,8 +18,9 @@ const Primitives = (_, value) => (
   typeof value === primitive ? new Primitive(value) : value
 );
 
-const revive = (input, parsed, output, $) => keys(output).reduce(
-  (output, key) => {
+const revive = (input, parsed, output, $) => {
+  for (let ke = keys(output), {length} = ke, y = 0; y < length; y++) {
+    const key = ke[y];
     const value = output[key];
     if (value instanceof Primitive) {
       const tmp = input[value];
@@ -31,10 +32,9 @@ const revive = (input, parsed, output, $) => keys(output).reduce(
       }
     } else
       output[key] = $.call(output, key, value);
-    return output;
-  },
-  output
-);
+  }
+  return output;
+};
 
 const set = (known, input, value) => {
   const index = Primitive(input.push(value) - 1);
