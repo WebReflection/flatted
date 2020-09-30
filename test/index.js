@@ -407,3 +407,10 @@ if (typeof Symbol !== 'undefined') {
     'objects copied with circular empty keys are the same'
   );
 }());
+
+['65515.json', '65518.json'].forEach(fileName => {
+  let dataString = require('fs').readFileSync('test/' + fileName).toString('utf-8');
+  let rawJson = JSON.parse(dataString);
+  let {toolData} = rawJson;
+  console.assert(typeof Flatted.parse(JSON.stringify(toolData)) === 'object');
+});
