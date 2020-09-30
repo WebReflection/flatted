@@ -11,6 +11,7 @@ self.Flatted = (function (exports) {
 
   var primitive = 'string'; // it could be 'number'
 
+  var ignore = {};
   var object = 'object';
 
   var noop = function noop(_, value) {
@@ -26,22 +27,34 @@ self.Flatted = (function (exports) {
   };
 
   var revive = function revive(input, parsed, output, $) {
-    return keys(output).reduce(function (output, key) {
-      var value = output[key];
+    var lazy = [];
+
+    for (var ke = keys(output), length = ke.length, y = 0; y < length; y++) {
+      var k = ke[y];
+      var value = output[k];
 
       if (value instanceof Primitive) {
         var tmp = input[value];
 
         if (typeof(tmp) === object && !parsed.has(tmp)) {
           parsed.add(tmp);
-          output[key] = $.call(output, key, revive(input, parsed, tmp, $));
-        } else {
-          output[key] = $.call(output, key, tmp);
-        }
-      } else output[key] = $.call(output, key, value);
+          output[k] = ignore;
+          lazy.push({
+            k: k,
+            a: [input, parsed, tmp, $]
+          });
+        } else output[k] = $.call(output, k, tmp);
+      } else if (output[k] !== ignore) output[k] = $.call(output, k, value);
+    }
 
-      return output;
-    }, output);
+    for (var _length = lazy.length, i = 0; i < _length; i++) {
+      var _lazy$i = lazy[i],
+          _k = _lazy$i.k,
+          a = _lazy$i.a;
+      output[_k] = $.call(output, _k, revive.apply(null, a));
+    }
+
+    return output;
   };
 
   var set = function set(known, input, value) {
