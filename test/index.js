@@ -414,3 +414,29 @@ if (typeof Symbol !== 'undefined') {
   let {toolData} = rawJson;
   console.assert(typeof Flatted.parse(JSON.stringify(toolData)) === 'object');
 });
+
+class RecursiveMap extends Map {
+  static fromJSON(any) {
+    return new this(Flatted.fromJSON(any));
+  }
+  toJSON() {
+    return Flatted.toJSON([...this.entries()]);
+  }
+}
+
+const jsonMap = new RecursiveMap([['test', 'value']]);
+const asJSON = JSON.stringify(jsonMap);
+const expected = '[["1"],["2","3"],"test","value"]';
+console.assert(asJSON === expected, 'toJSON');
+const revived = RecursiveMap.fromJSON(JSON.parse(asJSON));
+console.assert(revived.get('test') === 'value', 'fromJSON');
+
+
+const recursive = new RecursiveMap;
+const same = {};
+same.same = same;
+recursive.set('same', same);
+
+const asString = JSON.stringify(recursive);
+const asMap = RecursiveMap.fromJSON(JSON.parse(asString));
+console.assert(asMap.get('same').same === asMap.get('same'), 'RecursiveMap');

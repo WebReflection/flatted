@@ -5,8 +5,9 @@ export default {
   plugins: [
     terser()
   ],
-  
+
   output: {
+    esModule: false,
     exports: 'named',
     file: './es.js',
     format: 'iife',
