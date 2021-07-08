@@ -13,7 +13,8 @@
     "min": "terser index.js -c -m -o min.js",
     "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c9 min.js | wc -c;cat min.js | brotli | wc -c; cat es.js | brotli | wc -c",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "test": "nyc node test/index.js"
+    "test": "nyc node test/index.js",
+    "test:php": "php php/test.php"
   },
   "repository": {
     "type": "git",
@@ -42,7 +43,7 @@
     "drop-babel-typeof": "^1.0.3",
     "jsan": "^3.1.13",
     "nyc": "^15.1.0",
-    "rollup": "^2.52.6",
+    "rollup": "^2.52.8",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^7.0.2",

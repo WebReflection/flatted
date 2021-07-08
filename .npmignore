@@ -4,4 +4,5 @@
 node_modules/
 rollup/
 test/
+php/test.php
 package-lock.json
