@@ -2,6 +2,7 @@
 .nyc_output
 .travis.yml
 node_modules/
+coverage/
 rollup/
 test/
 php/test.php
