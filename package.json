@@ -12,9 +12,9 @@
     "rollup:babel": "rollup --config rollup/babel.config.js && sed -i.bck 's/^var /self./' index.js && rm -rf index.js.bck && drop-babel-typeof index.js",
     "min": "terser index.js -c -m -o min.js",
     "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c9 min.js | wc -c;cat min.js | brotli | wc -c; cat es.js | brotli | wc -c",
-    "coveralls": "c8 report --reporter=text-lcov | coveralls",
     "test": "c8 node test/index.js",
-    "test:php": "php php/test.php"
+    "test:php": "php php/test.php",
+    "coverage": "mkdir -p ./coverage; c8 report --reporter=text-lcov > ./coverage/lcov.info"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,6 @@
     "c8": "^7.7.3",
     "circular-json": "^0.5.9",
     "circular-json-es6": "^2.0.2",
-    "coveralls": "^3.1.1",
     "drop-babel-typeof": "^1.0.3",
     "jsan": "^3.1.13",
     "rollup": "^2.52.8",
