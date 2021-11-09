@@ -8,7 +8,7 @@
 
 ## Announcement 📣
 
-There a standard approach to recursion and more data-types than what JSON allow, and it's part of this [Structured Clone Module](https://github.com/ungap/structured-clone/#readme).
+There is a standard approach to recursion and more data-types than what JSON allow, and it's part of this [Structured Clone Module](https://github.com/ungap/structured-clone/#readme).
 
 Beside acting as a polyfill, its `@ungap/structured-clone/json` export provides both `stringify` and `parse`, and it's been tested for being faster than *flatted*, but its produced output is also smaller than *flatted*.
 
