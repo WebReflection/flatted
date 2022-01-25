@@ -42,7 +42,7 @@ a.push(a);
 stringify(a); // [["1","0"],{"a":"0"}]
 ```
 
-## toJSON and from JSON
+## toJSON and fromJSON
 
 If you'd like to implicitly survive JSON serialization, these two helpers helps:
 
