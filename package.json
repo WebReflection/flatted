@@ -52,7 +52,10 @@
   "module": "./esm/index.js",
   "type": "module",
   "exports": {
-    "import": "./esm/index.js",
-    "default": "./cjs/index.js"
+    "./package.json": "./package.json",
+    ".": {
+        "import": "./esm/index.js",
+        "default": "./cjs/index.js"
+    }
   }
 }
