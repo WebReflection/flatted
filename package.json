@@ -53,6 +53,7 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./types.d.ts",
       "import": "./esm/index.js",
       "default": "./cjs/index.js"
     },
