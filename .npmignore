@@ -1,4 +1,5 @@
 .DS_Store
+.github
 .nyc_output
 .travis.yml
 node_modules/
@@ -6,4 +7,6 @@ coverage/
 rollup/
 test/
 php/test.php
+flatted.jpg
 package-lock.json
+SPECS.md
