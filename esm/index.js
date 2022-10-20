@@ -26,7 +26,7 @@ const revive = (input, parsed, output, $) => {
     const value = output[k];
     if (value instanceof Primitive) {
       const tmp = input[value];
-      if (typeof tmp === object && !parsed.has(tmp)) {
+      if (tmp && typeof tmp === object) {
         parsed.add(tmp);
         output[k] = ignore;
         lazy.push({k, a: [input, parsed, tmp, $]});
