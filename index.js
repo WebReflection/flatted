@@ -44,7 +44,7 @@ self.Flatted = (function (exports) {
       if (value instanceof Primitive) {
         var tmp = input[value];
 
-        if (_typeof(tmp) === object && !parsed.has(tmp)) {
+        if (tmp && _typeof(tmp) === object) {
           parsed.add(tmp);
           output[k] = ignore;
           lazy.push({
