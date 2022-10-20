@@ -77,6 +77,17 @@ export const stringify = (value, replacer, space) => {
   function replace(key, value) {
     if (firstRun) {
       firstRun = !firstRun;
+      
+      // 排序 Key, 让序列化稳定
+      if (Object.prototype.toString.call(value) === '[object Object]') {
+        const temp = { ...value };
+        const keys = Object.keys(temp).sort();
+        for (let key of keys) {
+          delete value[key];
+          value[key] = temp[key];
+        }
+      }
+      
       return value;
     }
     const after = $.call(this, key, value);
