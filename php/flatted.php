@@ -148,7 +148,6 @@ class Flatted {
       foreach ($keys as $key) {
         $value->$key = self::wrap($value->$key);
       }
-      return $value;
     }
     return $value;
   }
