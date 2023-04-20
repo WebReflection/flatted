@@ -6,7 +6,7 @@ node_modules/
 coverage/
 rollup/
 test/
-php/test.php
+php/
 flatted.jpg
 package-lock.json
 SPECS.md
