@@ -101,8 +101,7 @@ console::assert(
 $oo = Flatted::parse('[{"a":"1","b":"0","c":"2"},{"aa":"3"},{"ca":"4","cb":"5","cc":"6","cd":"7","ce":"8","cf":"9"},{"aaa":"10"},{"caa":"4"},{"cba":"5"},{"cca":"2"},{"cda":"4"},"value2","value3","value1"]');
 
 console::assert(
-  $oo->a->aa->aaa = 'value1'
-  && $oo === $oo->b
+  $oo->a->aa->aaa === 'value1'
   && $oo === $oo->b
   && $oo->c->ca->caa === $oo->c->ca
   && $oo->c->cb->cba === $oo->c->cb
