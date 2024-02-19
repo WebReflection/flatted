@@ -1,0 +1,20 @@
+{
+  "name": "@wr/flatted",
+  "version": "3.2.9",
+  "exports": "./esm/index.js",
+  "exclude": [
+    ".github/*",
+    "./cjs/*",
+    "./coverage/*",
+    "./node_modules/*",
+    "./rollup/*",
+    "./test/*",
+    ".gitignore",
+    ".npmignore",
+    ".npmrc",
+    "es.js",
+    "index.js",
+    "min.js",
+    "package-lock.json"
+  ]
+}

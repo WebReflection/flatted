@@ -11,7 +11,9 @@ self.Flatted = (function (exports) {
     }, _typeof(o);
   }
 
-  /*! (c) 2020 Andrea Giammarchi */
+  /// <reference types="../types.d.ts" />
+
+  // (c) 2020-present Andrea Giammarchi
 
   var $parse = JSON.parse,
     $stringify = JSON.stringify;

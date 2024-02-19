@@ -1,5 +1,7 @@
 'use strict';
-/*! (c) 2020 Andrea Giammarchi */
+/// <reference types="../types.d.ts" />
+
+// (c) 2020-present Andrea Giammarchi
 
 const {parse: $parse, stringify: $stringify} = JSON;
 const {keys} = Object;
