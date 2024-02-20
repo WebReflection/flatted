@@ -1,4 +1,6 @@
 'use strict';
+/// <reference types="../types/index.d.ts" />
+
 // (c) 2020-present Andrea Giammarchi
 
 const {parse: $parse, stringify: $stringify} = JSON;
