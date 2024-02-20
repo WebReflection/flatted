@@ -1,6 +1,6 @@
 {
   "name": "@wr/flatted",
-  "version": "3.2.9",
+  "version": "3.2.10",
   "exports": "./esm/index.js",
   "exclude": [
     ".github/*",
