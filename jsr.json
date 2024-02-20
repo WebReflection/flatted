@@ -15,6 +15,7 @@
     "es.js",
     "index.js",
     "min.js",
-    "package-lock.json"
+    "package-lock.json",
+    "tsconfig.json"
   ]
 }

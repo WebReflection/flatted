@@ -11,8 +11,6 @@ self.Flatted = (function (exports) {
     }, _typeof(o);
   }
 
-  /// <reference types="../types.d.ts" />
-
   // (c) 2020-present Andrea Giammarchi
 
   var $parse = JSON.parse,
@@ -62,6 +60,13 @@ self.Flatted = (function (exports) {
     known.set(value, index);
     return index;
   };
+
+  /**
+   * Converts a specialized flatted string into a JS value.
+   * @param {string} text
+   * @param {((this: any, key: string, value: any) => any) | undefined): any} [reviver]
+   * @returns {any}
+   */
   var parse = function parse(text, reviver) {
     var input = $parse(text, Primitives).map(primitives);
     var value = input[0];
@@ -71,6 +76,14 @@ self.Flatted = (function (exports) {
       '': tmp
     }, '', tmp);
   };
+
+  /**
+   * Converts a JS value into a specialized flatted string.
+   * @param {any} value
+   * @param {((this: any, key: string, value: any) => any) | (string | number)[] | null | undefined} [replacer]
+   * @param {string | number | undefined} [string]
+   * @returns {string}
+   */
   var stringify = function stringify(value, replacer, space) {
     var $ = replacer && _typeof(replacer) === object ? function (k, v) {
       return k === '' || -1 < replacer.indexOf(k) ? v : void 0;
@@ -102,11 +115,23 @@ self.Flatted = (function (exports) {
       return after;
     }
   };
-  var toJSON = function toJSON(any) {
-    return $parse(stringify(any));
+
+  /**
+   * Converts a generic value into a JSON serializable object without losing recursion.
+   * @param {any} value
+   * @returns {any}
+   */
+  var toJSON = function toJSON(value) {
+    return $parse(stringify(value));
   };
-  var fromJSON = function fromJSON(any) {
-    return parse($stringify(any));
+
+  /**
+   * Converts a previously serialized object with recursion into a recursive one.
+   * @param {any} value
+   * @returns {any}
+   */
+  var fromJSON = function fromJSON(value) {
+    return parse($stringify(value));
   };
 
   exports.fromJSON = fromJSON;

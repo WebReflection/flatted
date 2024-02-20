@@ -3,10 +3,9 @@
   "version": "3.2.10",
   "description": "A super light and fast circular JSON parser.",
   "unpkg": "min.js",
-  "types": "types.d.ts",
   "main": "./cjs/index.js",
   "scripts": {
-    "build": "npm run cjs && npm run rollup:esm && npm run rollup:es && npm run rollup:babel && npm run min && npm run test && npm run size",
+    "build": "npm run cjs && npm run rollup:esm && npm run rollup:es && npm run rollup:babel && npm run min && npm run test && npm run ts && npm run size",
     "cjs": "ascjs esm cjs",
     "rollup:es": "rollup --config rollup/es.config.js && sed -i.bck 's/^var /self./' es.js && rm -rf es.js.bck",
     "rollup:esm": "rollup --config rollup/esm.config.js",
@@ -16,6 +15,7 @@
     "test": "c8 node test/index.js",
     "test:php": "php php/test.php",
     "test:py": "python python/test.py",
+    "ts": "tsc -p .",
     "coverage": "mkdir -p ./coverage; c8 report --reporter=text-lcov > ./coverage/lcov.info"
   },
   "repository": {
@@ -47,13 +47,14 @@
     "circular-json-es6": "^2.0.2",
     "jsan": "^3.1.14",
     "rollup": "^4.11.0",
-    "terser": "^5.27.0"
+    "terser": "^5.27.0",
+    "typescript": "^5.3.3"
   },
   "module": "./esm/index.js",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./types.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./esm/index.js",
       "default": "./cjs/index.js"
     },
