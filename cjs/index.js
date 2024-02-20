@@ -74,7 +74,7 @@ exports.parse = parse;
  * Converts a JS value into a specialized flatted string.
  * @param {any} value
  * @param {((this: any, key: string, value: any) => any) | (string | number)[] | null | undefined} [replacer]
- * @param {string | number | undefined} [string]
+ * @param {string | number | undefined} [space]
  * @returns {string}
  */
 const stringify = (value, replacer, space) => {
