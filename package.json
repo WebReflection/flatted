@@ -46,8 +46,8 @@
     "circular-json": "^0.5.9",
     "circular-json-es6": "^2.0.2",
     "jsan": "^3.1.14",
-    "rollup": "^4.11.0",
-    "terser": "^5.27.0",
+    "rollup": "^4.12.0",
+    "terser": "^5.27.2",
     "typescript": "^5.3.3"
   },
   "module": "./esm/index.js",
@@ -60,5 +60,6 @@
     },
     "./esm": "./esm.js",
     "./package.json": "./package.json"
-  }
+  },
+  "types": "./types/index.d.ts"
 }
