@@ -55,7 +55,7 @@ const set = (known, input, value) => {
 /**
  * Converts a specialized flatted string into a JS value.
  * @param {string} text
- * @param {((this: any, key: string, value: any) => any) | undefined): any} [reviver]
+ * @param {(this: any, key: string, value: any) => any} [reviver]
  * @returns {any}
  */
 export const parse = (text, reviver) => {
