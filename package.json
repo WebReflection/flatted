@@ -22,6 +22,19 @@
     "type": "git",
     "url": "git+https://github.com/WebReflection/flatted.git"
   },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "cjs/",
+    "es.js",
+    "esm.js",
+    "esm/",
+    "index.js",
+    "min.js",
+    "php/flatted.php",
+    "python/flatted.py",
+    "types/"
+  ],
   "keywords": [
     "circular",
     "JSON",
