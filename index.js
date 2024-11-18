@@ -66,7 +66,7 @@ self.Flatted = (function (exports) {
   /**
    * Converts a specialized flatted string into a JS value.
    * @param {string} text
-   * @param {((this: any, key: string, value: any) => any) | undefined): any} [reviver]
+   * @param {(this: any, key: string, value: any) => any} [reviver]
    * @returns {any}
    */
   var parse = function parse(text, reviver) {

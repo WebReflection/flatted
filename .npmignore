@@ -2,6 +2,7 @@
 .github
 .nyc_output
 .travis.yml
+__pycache__/
 node_modules/
 coverage/
 rollup/
