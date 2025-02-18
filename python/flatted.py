@@ -1,6 +1,6 @@
 # ISC License
 #
-# Copyright (c) 2018-2021, Andrea Giammarchi, @WebReflection
+# Copyright (c) 2018-2025, Andrea Giammarchi, @WebReflection
 #
 # Permission to use, copy, modify, and/or distribute this software for any
 # purpose with or without fee is hereby granted, provided that the above
@@ -41,7 +41,7 @@ def _object_keys(value):
     return keys
 
 def _is_array(value):
-    return isinstance(value, list) or isinstance(value, tuple)
+    return isinstance(value, (list, tuple))
 
 def _is_object(value):
     return isinstance(value, dict)
@@ -65,10 +65,10 @@ def _loop(keys, input, known, output):
     return output
 
 def _ref(key, value, input, known, output):
-    if _is_array(value) and not value in known:
+    if _is_array(value) and value not in known:
         known.append(value)
         value = _loop(_array_keys(value), input, known, value)
-    elif _is_object(value) and not value in known:
+    elif _is_object(value) and value not in known:
         known.append(value)
         value = _loop(_object_keys(value), input, known, value)
 
