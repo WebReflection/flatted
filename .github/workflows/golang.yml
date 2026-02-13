@@ -14,6 +14,7 @@ jobs:
       uses: actions/setup-go@v6
       with:
         go-version: '1.25.7'
+        cache-dependency-path: golang/go.sum
 
     - name: Check Formatting
       run: |
@@ -25,7 +26,7 @@ jobs:
       working-directory: ./golang
 
     - name: GolangCI-Lint
-      uses: golangci/golangci-lint-action@v6
+      uses: golangci/golangci-lint-action@v9
       with:
         version: latest
         working-directory: ./golang
