@@ -12,6 +12,8 @@ Available also for **[PHP](./php/flatted.php)**.
 
 Available also for **[Python](./python/flatted.py)**.
 
+Available also for **[Go](./golang/README.md)**.
+
 - - -
 
 ## Announcement 📣
