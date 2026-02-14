@@ -57,3 +57,6 @@ jobs:
     - name: Test
       run: go test -v -coverprofile=coverage.out ./...
       working-directory: ./golang
+
+    - name: Run Integration Test
+      run: bash ./test-dummy.sh
