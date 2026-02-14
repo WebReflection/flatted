@@ -7,6 +7,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Install System Dependencies
+      run: |
+        apt-get update && apt-get install -y jq make
+
     - name: Checkout code
       uses: actions/checkout@v6
 
@@ -44,6 +48,10 @@ jobs:
       run: |
         go install golang.org/x/vuln/cmd/govulncheck@latest
         govulncheck ./...
+      working-directory: ./golang
+
+    - name: Build
+      run: make build
       working-directory: ./golang
 
     - name: Test

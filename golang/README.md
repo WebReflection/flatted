@@ -9,7 +9,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/WebReflection/flatted/golang"
+	"github.com/WebReflection/flatted/golang/pkg/flatted"
 )
 
 type Group struct {
@@ -43,4 +43,18 @@ func main() {
 	aliceMap := res.(map[string]any)
 	fmt.Println(aliceMap["name"]) // Alice
 }
+```
+
+## CLI
+
+Build the binary using the provided Makefile:
+
+```bash
+make build
+```
+
+Then use it to parse flatted JSON from stdin:
+
+```bash
+echo '[{"a":"1"},"b"]' | ./flatted
 ```
