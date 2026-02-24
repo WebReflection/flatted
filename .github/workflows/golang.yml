@@ -9,7 +9,7 @@ jobs:
     steps:
     - name: Install System Dependencies
       run: |
-        apt-get update && apt-get install -y jq make
+        sudo apt-get update && sudo apt-get install -y jq make
 
     - name: Checkout code
       uses: actions/checkout@v6
