@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 
 	"github.com/WebReflection/flatted/golang/pkg/flatted"
 )
@@ -24,8 +25,11 @@ func flatten(r io.Reader, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	fmt.Fprintln(w, s)
-	return nil
+	if _, err := w.Write([]byte(s)); err != nil {
+		return err
+	}
+	_, err = w.Write([]byte("\n"))
+	return err
 }
 
 // unflatten reads flatted JSON from r and writes standard JSON to w.
@@ -42,18 +46,22 @@ func unflatten(r io.Reader, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	fmt.Fprintln(w, string(output))
-	return nil
+	if _, err := w.Write(output); err != nil {
+		return err
+	}
+	_, err = w.Write([]byte("\n"))
+	return err
 }
 
 func main() {
+	exe := filepath.Base(os.Args[0])
 	var decompress bool
 	flag.BoolVar(&decompress, "d", false, "decompress (unflatten)")
 	flag.BoolVar(&decompress, "decompress", false, "decompress (unflatten)")
 	flag.BoolVar(&decompress, "unflatten", false, "decompress (unflatten)")
 
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage: %s [OPTION]... [FILE]\n", os.Args[0])
+		fmt.Fprintf(os.Stderr, "Usage: %s [OPTION]... [FILE]\n", exe)
 		fmt.Fprintln(os.Stderr, "Flatten or unflatten circular JSON structures.")
 		fmt.Fprintln(os.Stderr, "")
 		fmt.Fprintln(os.Stderr, "Options:")
@@ -68,10 +76,10 @@ func main() {
 	if flag.NArg() > 0 && flag.Arg(0) != "-" {
 		f, err := os.Open(flag.Arg(0))
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%s: %v\n", os.Args[0], err)
+			fmt.Fprintf(os.Stderr, "%s: %v\n", exe, err) // #nosec G705
 			os.Exit(1)
 		}
-		defer f.Close()
+		defer func() { _ = f.Close() }()
 		r = f
 	}
 
@@ -83,7 +91,7 @@ func main() {
 	}
 
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "%s: %v\n", os.Args[0], err)
+		fmt.Fprintf(os.Stderr, "%s: %v\n", exe, err) // #nosec G705
 		os.Exit(1)
 	}
 }
