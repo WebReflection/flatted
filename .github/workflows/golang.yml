@@ -38,9 +38,6 @@ jobs:
         GOFLAGS: "-buildvcs=false"
 
     - name: Run Gosec Security Scanner
-      uses: securego/gosec@master
-      with:
-        args: ./golang/...
       run: |
         go install github.com/securego/gosec/v2/cmd/gosec@latest
         gosec ./...
