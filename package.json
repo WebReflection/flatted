@@ -33,6 +33,7 @@
     "min.js",
     "php/flatted.php",
     "python/flatted.py",
+    "golang/pkg/flatted/flatted.go",
     "types/"
   ],
   "keywords": [
