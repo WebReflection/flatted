@@ -3,3 +3,7 @@
 node_modules/
 coverage/
 __pycache__
+
+# Go artifacts
+*.test
+*.out
