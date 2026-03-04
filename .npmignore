@@ -1,13 +1,14 @@
 .DS_Store
 .github
 .nyc_output
-.travis.yml
 __pycache__/
 node_modules/
 coverage/
 rollup/
 test/
-php/test.php
+golang/
+php/
+python/
 flatted.jpg
 package-lock.json
 SPECS.md
