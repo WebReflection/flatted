@@ -25,39 +25,13 @@ class _String:
     def __init__(self, value):
         self.value = value
 
-def _resolver(input, lazy, parsed):
-    ignore = {}
-
-    def resolver(output):
-        keys = _array_keys(output) if _is_array(output) else _object_keys(output) if _is_object(output) else []
-        for key in keys:
-            value = output[key]
-            if isinstance(value, _String):
-                tmp = input[int(value.value)]
-                if (_is_array(tmp) or _is_object(tmp)) and tmp not in parsed:
-                    parsed.append(tmp)
-                    output[key] = ignore
-                    lazy.append([output, key, tmp])
-                else:
-                    output[key] = tmp
-
-        return output
-
-    return resolver
-
 def _array_keys(value):
-    keys = []
-    i = 0
-    for _ in value:
-        keys.append(i)
-        i += 1
-    return keys
+    for i in range(len(value)):
+        yield i
 
 def _object_keys(value):
-    keys = []
     for key in value:
-        keys.append(key)
-    return keys
+        yield key
 
 def _is_array(value):
     return isinstance(value, (list, tuple))
@@ -83,6 +57,22 @@ def _relate(known, input, value):
             return _index(known, input, value)
 
     return value
+
+def _resolver(input, lazy, parsed):
+    def resolver(output):
+        keys = _array_keys(output) if _is_array(output) else _object_keys(output) if _is_object(output) else []
+        for key in keys:
+            value = output[key]
+            if isinstance(value, _String):
+                tmp = input[int(value.value)]
+                output[key] = tmp
+                if (_is_array(tmp) or _is_object(tmp)) and tmp not in parsed:
+                    parsed.append(tmp)
+                    lazy.append([output, key])
+
+        return output
+
+    return resolver
 
 def _transform(known, input, value):
     if _is_array(value):
@@ -136,9 +126,9 @@ def parse(value, *args, **kwargs):
 
     i = 0
     while i < len(lazy):
-        o, k, r = lazy[i]
+        o, k = lazy[i]
         i += 1
-        o[k] = revive(r)
+        o[k] = revive(o[k])
 
     return value
 

@@ -61,7 +61,7 @@ oo = parse('[{"a":"1","b":"0","c":"2"},{"aa":"3"},{"ca":"4","cb":"5","cc":"6","c
 assert oo['a']['aa']['aaa'] == 'value1' and oo == oo['b'] and oo['c']['ca']['caa'] == oo['c']['ca']
 
 
-AMOUNT = 1000
+AMOUNT = 1500
 
 chain = ['leaf']
 for i in range(AMOUNT):
