@@ -112,6 +112,26 @@ console::assert(
   'parse is correct'
 );
 
+$AMOUNT = 1000;
+
+$chain = array();
+$chain[] = 'leaf';
+
+for ($i = 0; $i < $AMOUNT; $i++) {
+    $curr = $chain;
+    $chain = array();
+    $chain[] = $curr;
+}
+
+$str = Flatted::stringify($chain);
+$parsed = Flatted::parse($str);
+
+for ($i = 0; $i < $AMOUNT; $i++) {
+    $chain = $chain[0];
+}
+
+var_dump($chain);
+
 echo "OK\n";
 
 ?>
