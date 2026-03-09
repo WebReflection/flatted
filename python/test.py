@@ -60,4 +60,22 @@ assert str['b']['t']['a'] == 'sup' and str['a'][1]['b'][0]['c'] == str['b']['t']
 oo = parse('[{"a":"1","b":"0","c":"2"},{"aa":"3"},{"ca":"4","cb":"5","cc":"6","cd":"7","ce":"8","cf":"9"},{"aaa":"10"},{"caa":"4"},{"cba":"5"},{"cca":"2"},{"cda":"4"},"value2","value3","value1"]');
 assert oo['a']['aa']['aaa'] == 'value1' and oo == oo['b'] and oo['c']['ca']['caa'] == oo['c']['ca']
 
+
+AMOUNT = 1000
+
+chain = ['leaf']
+for i in range(AMOUNT):
+    chain = [chain]
+
+str = stringify(chain)
+print('stringify', '✅')
+
+parsed = parse(str)
+
+for i in range(AMOUNT):
+    chain = chain[0]
+
+print(chain)
+print('parse', '✅')
+
 print('OK')
