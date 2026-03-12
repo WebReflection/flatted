@@ -1,6 +1,8 @@
 // original file from:
 // https://github.com/yyx990803/circular-json-es6
 
+var isArray = Array.isArray;
+
 var dummy100 = require('./data.json');
 var dummy50 = dummy100.slice(0, 50)
 var dummy10 = dummy100.slice(0, 10)
@@ -20,13 +22,14 @@ var jsan = require('jsan')
 var cj6 = require('circular-json-es6')
 var flatted = require('../cjs')
 var SC = require('@ungap/structured-clone/json')
+var flattedView = require('./flatted-view.mjs').default
 
 function run(name, fn, dummy) {
   console.log(
     name + ' ' + (
       typeof dummy === 'string' ?
         dummy.length + ' chars' :
-        (dummy.length || '') + ' objects'
+        (isArray(dummy) && typeof dummy[0] === 'number' ? (dummy.length + ' bytes') : ((dummy.length || '') + ' objects'))
     ) + ' parsed ' + (
       bench(fn, dummy) / 1000
     ).toFixed(2) + ' times per second'
@@ -72,6 +75,13 @@ run('Structured Clone', SC.parse, r)
 run('Structured Clone', SC.stringify, dummy10)
 run('Structured Clone', SC.parse, r)
 console.log('-----------------------------------')
+run('flatted-view', flattedView.encode, dummy100)
+run('flatted-view', flattedView.decode, r)
+run('flatted-view', flattedView.encode, dummy50)
+run('flatted-view', flattedView.decode, r)
+run('flatted-view', flattedView.encode, dummy10)
+run('flatted-view', flattedView.decode, r)
+console.log('-----------------------------------')
 console.log('50% same objects')
 dummy100 = dummy50.concat(dummy50)
 console.log('-----------------------------------')
@@ -85,6 +95,8 @@ run('flatted', flatted.stringify, dummy100)
 run('flatted', flatted.parse, r)
 run('Structured Clone', SC.stringify, dummy100)
 run('Structured Clone', SC.parse, r)
+run('flatted-view', flattedView.encode, dummy100)
+run('flatted-view', flattedView.decode, r)
 console.log('-----------------------------------')
 console.log('90% same objects')
 dummy100 = [].concat(
@@ -102,6 +114,8 @@ run('flatted', flatted.stringify, dummy100)
 run('flatted', flatted.parse, r)
 run('Structured Clone', SC.stringify, dummy100)
 run('Structured Clone', SC.parse, r)
+run('flatted-view', flattedView.encode, dummy100)
+run('flatted-view', flattedView.decode, r)
 console.log('-----------------------------------')
 console.log('with circular')
 function makeCircularObject () {
@@ -124,6 +138,8 @@ run('flatted', flatted.stringify, dummy100)
 run('flatted', flatted.parse, r)
 run('Structured Clone', SC.stringify, dummy100)
 run('Structured Clone', SC.parse, r)
+run('flatted-view', flattedView.encode, dummy100)
+run('flatted-view', flattedView.decode, r)
 console.log('-----------------------------------')
 console.log('with circular 90% same')
 function makeCircularObject () {
@@ -150,6 +166,8 @@ run('flatted', flatted.stringify, dummy100)
 run('flatted', flatted.parse, r)
 run('Structured Clone', SC.stringify, dummy100)
 run('Structured Clone', SC.parse, r)
+run('flatted-view', flattedView.encode, dummy100)
+run('flatted-view', flattedView.decode, r)
 // */
 console.log('-----------------------------------')
 console.log('Big real-world circular data')
@@ -168,3 +186,5 @@ run('flatted', flatted.stringify, cirular)
 run('flatted', flatted.parse, r)
 run('Structured Clone', SC.stringify, cirular)
 run('Structured Clone', SC.parse, r)
+run('flatted-view', flattedView.encode, cirular)
+run('flatted-view', flattedView.decode, r)

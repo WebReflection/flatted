@@ -59,6 +59,7 @@
     "c8": "^11.0.0",
     "circular-json": "^0.5.9",
     "circular-json-es6": "^2.0.2",
+    "flatted-view": "^0.1.1",
     "jsan": "^3.1.14",
     "rollup": "^4.59.0",
     "terser": "^5.46.0",
