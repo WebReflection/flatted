@@ -38,7 +38,7 @@ self.Flatted = (function (exports) {
         var k = ke[y];
         var value = output[k];
         if (value instanceof Primitive) {
-          var tmp = input[value];
+          var tmp = input[+value];
           if (_typeof(tmp) === object && !parsed.has(tmp)) {
             parsed.add(tmp);
             output[k] = ignore;
