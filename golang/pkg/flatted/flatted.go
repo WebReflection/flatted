@@ -13,7 +13,7 @@ import (
 type flattedIndex string
 
 // Stringify converts a Go value into a specialized flatted JSON string.
-func Stringify(value any, replacer any, space any) (string, error) {
+func Stringify(value, replacer, space any) (string, error) {
 	knownKeys := []any{}
 	knownValues := []string{}
 	input := []any{}
@@ -123,10 +123,11 @@ func Stringify(value any, replacer any, space any) (string, error) {
 	var b []byte
 	var err error
 	indent := ""
-	if s, ok := space.(string); ok {
-		indent = s
-	} else if i, ok := space.(int); ok {
-		indent = strings.Repeat(" ", i)
+	switch v := space.(type) {
+	case string:
+		indent = v
+	case int:
+		indent = strings.Repeat(" ", v)
 	}
 
 	if indent != "" {
@@ -205,18 +206,19 @@ func Parse(text string, reviver func(key string, value any) any) (any, error) {
 }
 
 func revive(key string, value any, reviver func(k string, v any) any) any {
-	if arr, ok := value.([]any); ok {
-		for i, v := range arr {
-			arr[i] = revive(strconv.Itoa(i), v, reviver)
+	switch v := value.(type) {
+	case []any:
+		for i, el := range v {
+			v[i] = revive(strconv.Itoa(i), el, reviver)
 		}
-	} else if m, ok := value.(map[string]any); ok {
-		keys := make([]string, 0, len(m))
-		for k := range m {
+	case map[string]any:
+		keys := make([]string, 0, len(v))
+		for k := range v {
 			keys = append(keys, k)
 		}
 		sort.Strings(keys)
 		for _, k := range keys {
-			m[k] = revive(k, m[k], reviver)
+			v[k] = revive(k, v[k], reviver)
 		}
 	}
 	return reviver(key, value)
