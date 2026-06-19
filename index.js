@@ -26,6 +26,13 @@ self.Flatted = (function (exports) {
   var noop = function noop(_, value) {
     return value;
   };
+
+  // Assigns the revived value to the property, or deletes the property when the
+  // reviver returns `undefined`, matching `JSON.parse` reviver semantics.
+  var reviveProp = function reviveProp(holder, key, value, $) {
+    var result = $.call(holder, key, value);
+    if (result === void 0) delete holder[key];else holder[key] = result;
+  };
   var primitives = function primitives(value) {
     return value instanceof Primitive ? Primitive(value) : value;
   };
@@ -47,8 +54,8 @@ self.Flatted = (function (exports) {
               k: k,
               r: tmp
             });
-          } else output[k] = $.call(output, k, tmp);
-        } else if (output[k] !== ignore) output[k] = $.call(output, k, value);
+          } else reviveProp(output, k, tmp, $);
+        } else if (output[k] !== ignore) reviveProp(output, k, value, $);
       }
       return output;
     };
@@ -80,7 +87,7 @@ self.Flatted = (function (exports) {
           o = _lazy$i.o,
           k = _lazy$i.k,
           r = _lazy$i.r;
-        o[k] = $.call(o, k, revive(r));
+        reviveProp(o, k, revive(r), $);
       }
     }
     return $.call({

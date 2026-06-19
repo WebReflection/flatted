@@ -14,6 +14,16 @@ const object = 'object';
 
 const noop = (_, value) => value;
 
+// Assigns the revived value to the property, or deletes the property when the
+// reviver returns `undefined`, matching `JSON.parse` reviver semantics.
+const reviveProp = (holder, key, value, $) => {
+  const result = $.call(holder, key, value);
+  if (result === void 0)
+    delete holder[key];
+  else
+    holder[key] = result;
+};
+
 const primitives = value => (
   value instanceof Primitive ? Primitive(value) : value
 );
@@ -34,10 +44,10 @@ const resolver = (input, lazy, parsed, $) => output => {
         lazy.push({ o: output, k, r: tmp });
       }
       else
-        output[k] = $.call(output, k, tmp);
+        reviveProp(output, k, tmp, $);
     }
     else if (output[k] !== ignore)
-      output[k] = $.call(output, k, value);
+      reviveProp(output, k, value, $);
   }
   return output;
 };
@@ -69,7 +79,7 @@ const parse = (text, reviver) => {
     while (i < lazy.length) {
       // it could be a lazy.shift() but that's costly
       const {o, k, r} = lazy[i++];
-      o[k] = $.call(o, k, revive(r));
+      reviveProp(o, k, revive(r), $);
     }
   }
 

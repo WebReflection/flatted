@@ -185,6 +185,43 @@ console.assert(Flatted.parse(
   );
 }());
 
+// a reviver returning `undefined` must delete the property (as `JSON.parse` does)
+(function () {
+  var o = Flatted.parse(Flatted.stringify({a: 1, b: 2, c: 3}), function (key, value) {
+    return key === 'b' ? undefined : value;
+  });
+  console.assert(
+    !('b' in o) && o.a === 1 && o.c === 3,
+    'reviver returning undefined deletes the key'
+  );
+
+  var nested = Flatted.parse(Flatted.stringify({o: {x: 1, y: 2}}), function (key, value) {
+    return key === 'y' ? undefined : value;
+  });
+  console.assert(
+    !('y' in nested.o) && nested.o.x === 1,
+    'reviver returning undefined deletes a nested key'
+  );
+
+  var arr = Flatted.parse(Flatted.stringify([10, 20, 30]), function (key, value) {
+    return value === 20 ? undefined : value;
+  });
+  console.assert(
+    arr.length === 3 && !(1 in arr) && arr[0] === 10 && arr[2] === 30,
+    'reviver returning undefined leaves an array hole'
+  );
+
+  var recursive = {keep: 1, drop: 2};
+  recursive.self = recursive;
+  recursive = Flatted.parse(Flatted.stringify(recursive), function (key, value) {
+    return key === 'drop' ? undefined : value;
+  });
+  console.assert(
+    recursive.self === recursive && recursive.keep === 1 && !('drop' in recursive),
+    'reviver returning undefined deletes the key on recursive structures'
+  );
+}());
+
 (function () {
   var o = {};
   o['~'] = o;
