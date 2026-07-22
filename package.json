@@ -65,6 +65,11 @@
     "terser": "^5.46.1",
     "typescript": "^5.9.3"
   },
+  "overrides": {
+    "c8": {
+      "yargs": "^18.0.0"
+    }
+  },
   "module": "./esm/index.js",
   "type": "module",
   "exports": {
