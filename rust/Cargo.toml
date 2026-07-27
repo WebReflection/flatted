@@ -1,0 +1,31 @@
+[package]
+name = "flatted"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70"
+authors = ["Andrea Giammarchi"]
+license = "ISC"
+description = "A super light and fast circular JSON parser."
+repository = "https://github.com/WebReflection/flatted"
+homepage = "https://github.com/WebReflection/flatted"
+readme = "README.md"
+keywords = ["circular", "json", "parser", "serialize", "flatted"]
+categories = ["encoding", "parser-implementations"]
+exclude = ["target/"]
+
+[dependencies]
+indexmap = "2"
+serde_json = { version = "1", default-features = false, features = ["std", "preserve_order"] }
+
+[lib]
+name = "flatted"
+path = "src/lib.rs"
+
+[[bin]]
+name = "flatted"
+path = "src/main.rs"
+required-features = ["cli"]
+
+[features]
+default = []
+cli = []

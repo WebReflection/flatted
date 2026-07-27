@@ -14,6 +14,8 @@ Available also for **[Python](./python/flatted.py)**.
 
 Available also for **[Go](./golang/README.md)**.
 
+Available also for **[Rust](./rust/README.md)**.
+
 - - -
 
 ## ℹ️ JSON only values
