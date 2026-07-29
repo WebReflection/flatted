@@ -32,7 +32,7 @@ func Stringify(value, replacer, space any) (string, error) {
 		}
 		rv := reflect.ValueOf(v)
 		kind := rv.Kind()
-		if kind == reflect.String || kind == reflect.Slice || kind == reflect.Map || kind == reflect.Ptr {
+		if kind == reflect.String || kind == reflect.Slice || kind == reflect.Map || kind == reflect.Pointer {
 			for i, k := range knownKeys {
 				if kind == reflect.String {
 					if k == v {
@@ -59,7 +59,7 @@ func Stringify(value, replacer, space any) (string, error) {
 			return v
 		}
 		// Dereference pointers to process the underlying Slice, Map, or Array
-		for rv.Kind() == reflect.Ptr && !rv.IsNil() {
+		for rv.Kind() == reflect.Pointer && !rv.IsNil() {
 			rv = rv.Elem()
 		}
 		switch rv.Kind() {
