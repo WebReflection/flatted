@@ -7,3 +7,6 @@ __pycache__
 # Go artifacts
 *.test
 *.out
+
+# Bench fixtures
+test/.bench-circular.flatted.json

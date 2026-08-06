@@ -15,6 +15,8 @@
     "test": "c8 node test/index.js",
     "test:php": "php php/test.php",
     "test:py": "python python/test.py",
+    "test:rs": "cargo test --manifest-path rust/Cargo.toml",
+    "bench:js-rs": "node test/bench-js-vs-rs.mjs",
     "ts": "tsc -p .",
     "coverage": "mkdir -p ./coverage; c8 report --reporter=text-lcov > ./coverage/lcov.info"
   },
@@ -34,6 +36,7 @@
     "php/flatted.php",
     "python/flatted.py",
     "golang/pkg/flatted/flatted.go",
+    "rust/src/lib.rs",
     "types/"
   ],
   "keywords": [
