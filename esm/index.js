@@ -84,7 +84,7 @@ export const parse = (text, reviver) => {
  */
 export const stringify = (value, replacer, space) => {
   const $ = replacer && typeof replacer === object ?
-            (k, v) => (k === '' || -1 < replacer.indexOf(k) ? v : void 0) :
+            function (k, v) { return k === '' || Array.isArray(this) || -1 < replacer.indexOf(k) ? v : void 0; } :
             (replacer || noop);
   const known = new Map;
   const input = [];
