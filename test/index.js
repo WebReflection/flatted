@@ -391,6 +391,16 @@ if (typeof Symbol !== 'undefined') {
 }());
 
 (function () {
+  var a = ['a', 'b', 'c'];
+  var json = JSON.stringify(a, ['0']);
+  var restored = Flatted.parse(Flatted.stringify(a, ['0']));
+  console.assert(
+    JSON.stringify(restored) === json,
+    'whitelisted replacer does not filter Array values: '+ json
+  );
+}());
+
+(function () {
   var a = { b: { '': { c: { d: 1 } } } };
   a._circular = a.b[''];
   var json = Flatted.stringify(a);
