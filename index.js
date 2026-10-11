@@ -32,6 +32,10 @@ self.Flatted = (function (exports) {
   var Primitives = function Primitives(_, value) {
     return _typeof(value) === primitive ? new Primitive(value) : value;
   };
+  var reviveProperty = function reviveProperty(output, key, value, reviver) {
+    var revived = reviver.call(output, key, value);
+    if (revived === void 0) delete output[key];else output[key] = revived;
+  };
   var resolver = function resolver(input, lazy, parsed, $) {
     return function (output) {
       for (var ke = keys(output), length = ke.length, y = 0; y < length; y++) {
@@ -47,8 +51,8 @@ self.Flatted = (function (exports) {
               k: k,
               r: tmp
             });
-          } else output[k] = $.call(output, k, tmp);
-        } else if (output[k] !== ignore) output[k] = $.call(output, k, value);
+          } else reviveProperty(output, k, tmp, $);
+        } else if (output[k] !== ignore) reviveProperty(output, k, value, $);
       }
       return output;
     };
@@ -80,7 +84,7 @@ self.Flatted = (function (exports) {
           o = _lazy$i.o,
           k = _lazy$i.k,
           r = _lazy$i.r;
-        o[k] = $.call(o, k, revive(r));
+        reviveProperty(o, k, revive(r), $);
       }
     }
     return $.call({

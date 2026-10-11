@@ -21,6 +21,14 @@ const Primitives = (_, value) => (
   typeof value === primitive ? new Primitive(value) : value
 );
 
+const reviveProperty = (output, key, value, reviver) => {
+  const revived = reviver.call(output, key, value);
+  if (revived === void 0)
+    delete output[key];
+  else
+    output[key] = revived;
+};
+
 const resolver = (input, lazy, parsed, $) => output => {
   for (let ke = keys(output), {length} = ke, y = 0; y < length; y++) {
     const k = ke[y];
@@ -33,10 +41,10 @@ const resolver = (input, lazy, parsed, $) => output => {
         lazy.push({ o: output, k, r: tmp });
       }
       else
-        output[k] = $.call(output, k, tmp);
+        reviveProperty(output, k, tmp, $);
     }
     else if (output[k] !== ignore)
-      output[k] = $.call(output, k, value);
+      reviveProperty(output, k, value, $);
   }
   return output;
 };
@@ -68,7 +76,7 @@ export const parse = (text, reviver) => {
     while (i < lazy.length) {
       // it could be a lazy.shift() but that's costly
       const {o, k, r} = lazy[i++];
-      o[k] = $.call(o, k, revive(r));
+      reviveProperty(o, k, revive(r), $);
     }
   }
 

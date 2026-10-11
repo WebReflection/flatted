@@ -1,4 +1,25 @@
 var Flatted = require('../cjs');
+var assert = require('assert');
+
+var filtered = {number: 1, string: 'keep', removeString: 'drop', nested: {value: 2}, array: [3, 'keep']};
+var removeNumbers = function (key, value) {
+  return typeof value === 'number' || key === 'nested' || key === 'removeString' ? undefined : value;
+};
+assert.deepStrictEqual(
+  Flatted.parse(Flatted.stringify(filtered), removeNumbers),
+  JSON.parse(JSON.stringify(filtered), removeNumbers),
+  'reviver removes object properties and creates array holes'
+);
+
+var filteredCycle = {};
+filteredCycle.self = filteredCycle;
+assert.deepStrictEqual(
+  Flatted.parse(Flatted.stringify(filteredCycle), function (key, value) {
+    return key === 'self' ? undefined : value;
+  }),
+  {},
+  'reviver removes circular reference properties'
+);
 
 console.assert(Flatted.stringify([null, null]) === '[[null,null]]', 'multiple null');
 
