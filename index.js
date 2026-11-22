@@ -79,8 +79,9 @@ self.Flatted = (function (exports) {
       var i = 0;
       while (i < lazy.length) revive(lazy[i++].r);
 
-      // Parents are always queued before their children, so walking the
-      // queue backwards assigns containers bottom-up without recursion.
+      // A container is always queued before the containers it owns, so a
+      // reverse walk fills nested references in before their parent is
+      // passed to the reviver, without recursion.
       while (i--) {
         var _lazy$i = lazy[i],
           o = _lazy$i.o,
