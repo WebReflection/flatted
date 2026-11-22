@@ -65,11 +65,17 @@ const parse = (text, reviver) => {
     const revive = resolver(input, lazy, new Set, $);
     value = revive(value);
 
+    // Revive all containers first so that each reviver receives nested
+    // values that are already revived.
     let i = 0;
-    while (i < lazy.length) {
-      // it could be a lazy.shift() but that's costly
-      const {o, k, r} = lazy[i++];
-      o[k] = $.call(o, k, revive(r));
+    while (i < lazy.length)
+      revive(lazy[i++].r);
+
+    // Parents are always queued before their children, so walking the
+    // queue backwards assigns containers bottom-up without recursion.
+    while (i--) {
+      const {o, k, r} = lazy[i];
+      o[k] = $.call(o, k, r);
     }
   }
 

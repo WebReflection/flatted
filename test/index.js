@@ -186,6 +186,36 @@ console.assert(Flatted.parse(
 }());
 
 (function () {
+  var o = Flatted.parse(
+    Flatted.stringify({shape: {type: 'Point', pos: {x: 1, y: 2}}}),
+    function (key, value) {
+      return value && value.type === 'Point' ?
+        'Point(' + value.pos.x + ',' + value.pos.y + ')' :
+        value;
+    }
+  );
+  console.assert(o.shape === 'Point(1,2)', 'reviver sees nested values');
+
+  o = Flatted.parse(
+    Flatted.stringify({err: {message: 'boom', stack: 'Error: boom', response: {status: 500}}}),
+    function (key, value) {
+      if (value && value.message && value.stack) {
+        var error = new Error(value.message);
+        Object.keys(value).forEach(function (key) {
+          error[key] = value[key];
+        });
+        return error;
+      }
+      return value;
+    }
+  );
+  console.assert(
+    o.err instanceof Error && o.err.response.status === 500,
+    'reviver can replace a container after its values are revived'
+  );
+}());
+
+(function () {
   var o = {};
   o['~'] = o;
   o['\\x7e'] = '\\x7e';
